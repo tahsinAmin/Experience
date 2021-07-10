@@ -1,3 +1,4 @@
+import { logDOM } from '@testing-library/react';
 import React, { useState, useEffect } from 'react'
 import './App.css';
 
@@ -27,12 +28,32 @@ function App() {
 ]
 
   return (
-    <div className="container mx-auto p-4">
-      <p className="text-lg">{ data[value].title }</p>
-      <p>{ data[value].dates }</p>
-      <p>{ data[value].description }</p>
-      <p>{ data[value].company }</p>
-      {data.map((record, index) => <button className="rounded-full py-2 px-3 uppercase text-x font-bold cursor-pointer bg-gray-400" onClick={() => setValue(index)}>{index+1}</button>)}
+    <div className="mx-auto p-4 max-w-full flex">
+      <div className="bg-gray-800 text-gray-300 w-1/6 p-2">
+        {
+          data.map(
+            (record, index) => {
+              console.log(index === value);
+              return (
+                <div
+                  className={`cursor-pointer py-2 px-3 my-2 text-gray-400 ${index === value && 'act'}`}
+                  onClick={() => setValue(index)}>
+                  {record.company}
+                </div>
+              );
+            }
+          )
+        }
+      </div>
+      <div className="w-5/6 h-64 bg-gray-800">
+        <div className="rounded bg-gray-600 text-white m-4 p-4">
+          <div className="flex justify-between">
+            <h1 className="text-xl mb-2">{ data[value].title }</h1>
+            <p>{ data[value].dates }</p>
+          </div>
+          <p>{ data[value].description }</p>
+        </div>
+      </div>
     </div>
   );
 }
